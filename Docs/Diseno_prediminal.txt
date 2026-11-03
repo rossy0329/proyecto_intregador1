@@ -1,0 +1,15 @@
+# Documento de Diseño Preliminar 
+
+## Comparación de Estructuras Candidatas
+
+1. Arreglo Escalonado (Jagged Array - int[][])
+   - Pros: Cumple con soportar ejemplares irregulares sin dejar celdas vacías en memoria.
+   - Contras: Es rígido para agregar nuevos elementos y manipular objetos estructurados (como ISBN o títulos de libros).
+
+2. Lista de Arreglos (List<int[]>)
+   - Pros: Permite agregar nuevos títulos dinámicamente manteniendo arreglos de distinto tamaño para los ejemplares.
+   - Contras: Difícil de mantener ya que se pierden los nombres de los atributos (no se distingue fácilmente qué índice es el ISBN o los préstamos).
+
+3. Lista de Objetos (List<Título>) - ESTRUCTURA ELEGIDA
+   - Pros: Modelar una clase Título permite encapsulation limpia (ISBN, Nombre, Historial de Préstamos) y manejar los ejemplares con un arreglo/lista propio.
+   - Contras: Requiere definir una estructura orientada a objetos desde el inicio del proyecto.
