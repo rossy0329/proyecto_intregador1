@@ -1,112 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
+﻿# Documento de Prueba de Escritorio
 
-namespace BibliotecaEscolar
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            List<Libro> catalogo = new List<Libro>()
-            {
-                new Libro("978-01", "Cien anos de soledad", 15, 5),
-                new Libro("978-02", "Don Quijote de la Mancha", 20, 3),
-                new Libro("978-03", "El principito", 20, 1),
-                new Libro("978-04", "Fahrenheit 451", 8, 4),
-                new Libro("978-05", "Pedro Paramo", 12, 2),
-                new Libro("978-06", "Rayuela", 5, 1),
-                new Libro("978-07", "La ciudad y los perros", 18, 5),
-                new Libro("978-08", "Ficciones", 10, 2)
-            };
+## 1. Prueba de Escritorio: Insertion Sort (Por Préstamos Descendente)
 
-            Console.WriteLine("BÚSQUEDA SECUENCIAL POR TÍTULO");
-            BuscarPorTitulo(catalogo, "Pedro Paramo");
-            BuscarPorTitulo(catalogo, "Harry Potter"); 
+### Datos de entrada (Fragmento reducido de prueba):
+- [0] Don Quijote (Préstamos: 20)
+- [1] El principito (Préstamos: 20)
+- [2] Rayuela (Préstamos: 5)
+- [3] Cien años de soledad (Préstamos: 15)
 
-            List<Libro> copiaPorIsbn = new List<Libro>(catalogo);
-            OrdenarPorIsbn(copiaPorIsbn);
+### Traza de Ejecución:
+- **i = 1 (clave = El principito, 20):**
+  - j = 0 (Quijote, 20). Préstamos iguales (20 == 20).
+  - Comparación de título: "Don Quijote" vs "El principito" -> "Don Quijote" va antes. No hay cambio. Preserva estabilidad.
+- **i = 2 (clave = Rayuela, 5):**
+  - j = 1 (El principito, 20). 20 > 5 -> No intercambia.
+- **i = 3 (clave = Cien años de soledad, 15):**
+  - j = 2 (Rayuela, 5). 5 < 15 -> Intercambia Rayuela a la posición 3.
+  - j = 1 (El principito, 20). 20 > 15 -> Se detiene e inserta "Cien años de soledad" en posición 2.
 
-            Console.WriteLine("\n=== BÚSQUEDA BINARIA POR ISBN ===");
-            BuscarPorIsbnBinaria(copiaPorIsbn, "978-04");
-            BuscarPorIsbnBinaria(copiaPorIsbn, "978-99"); 
-        }
+---
 
-        
-        static void BuscarPorTitulo(List<Libro> lista, string tituloBuscado)
-        {
-            Libro encontrado = null;
-            foreach (var libro in lista)
-            {
-                if (libro.Titulo.Equals(tituloBuscado, StringComparison.OrdinalIgnoreCase))
-                {
-                    encontrado = libro;
-                    break;
-                }
-            }
+## 2. Prueba de Escritorio: Búsqueda Binaria por ISBN
 
-            if (encontrado != null)
-            {
-                Console.WriteLine($"[ENCONTRADO] '{encontrado.Titulo}' - Disponibles: {encontrado.ObtenerDisponibles()}/{encontrado.Ejemplares.Length}");
-            }
-            else
-            {
-                Console.WriteLine($"[NO ENCONTRADO] El libro con título '{tituloBuscado}' no existe en el catálogo.");
-            }
-        }
+### Arreglo Ordenado por ISBN:
+- [0] 978-01 (Cien años)
+- [1] 978-02 (Quijote)
+- [2] 978-03 (Principito)
+- [3] 978-04 (Fahrenheit)
+- [4] 978-05 (Pedro Páramo)
+- [5] 978-06 (Rayuela)
+- [6] 978-07 (La ciudad)
+- [7] 978-08 (Ficciones)
 
-        
-        static void BuscarPorIsbnBinaria(List<Libro> lista, string isbnBuscado)
-        {
-            int inicio = 0;
-            int fin = lista.Count - 1;
-            Libro encontrado = null;
-            int comparaciones = 0;
+### Búsqueda de ISBN: `978-04`
+- **Iteración 1:**
+  - `inicio = 0`, `fin = 7`, `medio = (0+7)/2 = 3`
+  - Elemento en `[3]` = `978-04`.
+  - Comparación: `978-04 == 978-04` -> **¡ENCONTRADO en 1 sola comparación!**# Documento de Prueba de Escritorio
 
-            while (inicio <= fin)
-            {
-                comparaciones++;
-                int medio = inicio + (fin - inicio) / 2;
-                int comparacion = string.Compare(lista[medio].Isbn, isbnBuscado, StringComparison.OrdinalIgnoreCase);
+## 1. Prueba de Escritorio: Insertion Sort (Por Préstamos Descendente)
 
-                if (comparacion == 0)
-                {
-                    encontrado = lista[medio];
-                    break;
-                }
-                else if (comparacion < 0)
-                {
-                    inicio = medio + 1;
-                }
-                else
-                {
-                    fin = medio - 1;
-                }
-            }
+### Datos de entrada (Fragmento reducido de prueba):
+- [0] Don Quijote (Préstamos: 20)
+- [1] El principito (Préstamos: 20)
+- [2] Rayuela (Préstamos: 5)
+- [3] Cien años de soledad (Préstamos: 15)
 
-            if (encontrado != null)
-            {
-                Console.WriteLine($"[ENCONTRADO BINARIA] ISBN: {encontrado.Isbn} | Título: '{encontrado.Titulo}' | Quedan: {encontrado.ObtenerDisponibles()} ejemplares | Comparaciones: {comparaciones}");
-            }
-            else
-            {
-                Console.WriteLine($"[NO ENCONTRADO BINARIA] El ISBN '{isbnBuscado}' no existe. Comparaciones realizadas: {comparaciones}");
-            }
-        }
+### Traza de Ejecución:
+- **i = 1 (clave = El principito, 20):**
+  - j = 0 (Quijote, 20). Préstamos iguales (20 == 20).
+  - Comparación de título: "Don Quijote" vs "El principito" -> "Don Quijote" va antes. No hay cambio. Preserva estabilidad.
+- **i = 2 (clave = Rayuela, 5):**
+  - j = 1 (El principito, 20). 20 > 5 -> No intercambia.
+- **i = 3 (clave = Cien años de soledad, 15):**
+  - j = 2 (Rayuela, 5). 5 < 15 -> Intercambia Rayuela a la posición 3.
+  - j = 1 (El principito, 20). 20 > 15 -> Se detiene e inserta "Cien años de soledad" en posición 2.
 
-        
-        static void OrdenarPorIsbn(List<Libro> lista)
-        {
-            for (int i = 1; i < lista.Count; i++)
-            {
-                Libro clave = lista[i];
-                int j = i - 1;
-                while (j >= 0 && string.Compare(lista[j].Isbn, clave.Isbn, StringComparison.OrdinalIgnoreCase) > 0)
-                {
-                    lista[j + 1] = lista[j];
-                    j--;
-                }
-                lista[j + 1] = clave;
-            }
-        }
-    }
-}
+---
+
+## 2. Prueba de Escritorio: Búsqueda Binaria por ISBN
+
+### Arreglo Ordenado por ISBN:
+- [0] 978-01 (Cien años)
+- [1] 978-02 (Quijote)
+- [2] 978-03 (Principito)
+- [3] 978-04 (Fahrenheit)
+- [4] 978-05 (Pedro Páramo)
+- [5] 978-06 (Rayuela)
+- [6] 978-07 (La ciudad)
+- [7] 978-08 (Ficciones)
+
+### Búsqueda de ISBN: `978-04`
+- **Iteración 1:**
+  - `inicio = 0`, `fin = 7`, `medio = (0+7)/2 = 3`
+  - Elemento en `[3]` = `978-04`.
+  - Comparación: `978-04 == 978-04` -> **¡ENCONTRADO en 1 sola comparación!**
